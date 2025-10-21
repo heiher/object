@@ -338,6 +338,8 @@ impl FileKind {
             | [0x64, 0xaa, ..]
             // COFF arm64ec
             | [0x41, 0xa6, ..]
+            // COFF loongarch64
+            | [0x64, 0x62, ..]
             // COFF ppc
             | [0xf0, 0x01, ..]
             | [0xf1, 0x01, ..]

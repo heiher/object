@@ -207,6 +207,18 @@ impl<'a> Object<'a> {
                 (K::Relative, E::AArch64Call, 26) => coff::IMAGE_REL_ARM64_BRANCH26,
                 _ => return unsupported_reloc(),
             },
+            Architecture::LoongArch64 => match (kind, encoding, size) {
+                (K::SectionIndex, _, 16) => coff::IMAGE_REL_LARCH_SECTION,
+                (K::SectionOffset, _, 32) => coff::IMAGE_REL_LARCH_SECREL,
+                (K::Relative, _, 32) => coff::IMAGE_REL_LARCH_REL32,
+                (K::Absolute, _, 32) => coff::IMAGE_REL_LARCH_ADDR32,
+                (K::ImageOffset, _, 32) => coff::IMAGE_REL_LARCH_ADDR32NB,
+                (K::Absolute, _, 64) => coff::IMAGE_REL_LARCH_ADDR64,
+                (K::Relative, E::LoongArchBranch, 16) => coff::IMAGE_REL_LARCH_B16,
+                (K::Relative, E::LoongArchBranch, 21) => coff::IMAGE_REL_LARCH_B21,
+                (K::Relative, E::LoongArchBranch, 26) => coff::IMAGE_REL_LARCH_B26,
+                _ => return unsupported_reloc(),
+            },
             _ => {
                 return Err(Error(format!(
                     "unimplemented architecture {:?}",
@@ -234,6 +246,13 @@ impl<'a> Object<'a> {
             }
             Architecture::Aarch64 => {
                 if typ == coff::IMAGE_REL_ARM64_REL32 {
+                    4
+                } else {
+                    0
+                }
+            }
+            Architecture::LoongArch64 => {
+                if typ == coff::IMAGE_REL_LARCH_REL32 {
                     4
                 } else {
                     0
@@ -312,6 +331,15 @@ impl<'a> Object<'a> {
                 | coff::IMAGE_REL_ARM64_TOKEN
                 | coff::IMAGE_REL_ARM64_REL32 => Some(32),
                 coff::IMAGE_REL_ARM64_ADDR64 => Some(64),
+                _ => None,
+            },
+            Architecture::LoongArch64 => match typ {
+                coff::IMAGE_REL_LARCH_SECTION => Some(16),
+                coff::IMAGE_REL_LARCH_SECREL
+                | coff::IMAGE_REL_LARCH_REL32
+                | coff::IMAGE_REL_LARCH_ADDR32
+                | coff::IMAGE_REL_LARCH_ADDR32NB => Some(32),
+                coff::IMAGE_REL_LARCH_ADDR64 => Some(64),
                 _ => None,
             },
             _ => None,
@@ -561,6 +589,7 @@ impl<'a> Object<'a> {
                 (Architecture::Aarch64, Some(SubArchitecture::Arm64EC), _) => {
                     coff::IMAGE_FILE_MACHINE_ARM64EC
                 }
+                (Architecture::LoongArch64, None, _) => coff::IMAGE_FILE_MACHINE_LOONGARCH64,
                 (Architecture::I386, None, _) => coff::IMAGE_FILE_MACHINE_I386,
                 (Architecture::X86_64, None, _) => coff::IMAGE_FILE_MACHINE_AMD64,
                 (Architecture::PowerPc | Architecture::PowerPc64, None, Endianness::Little) => {

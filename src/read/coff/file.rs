@@ -145,6 +145,7 @@ where
         match self.header.machine() {
             pe::IMAGE_FILE_MACHINE_ARMNT => Architecture::Arm,
             pe::IMAGE_FILE_MACHINE_ARM64 | pe::IMAGE_FILE_MACHINE_ARM64EC => Architecture::Aarch64,
+            pe::IMAGE_FILE_MACHINE_LOONGARCH64 => Architecture::LoongArch64,
             pe::IMAGE_FILE_MACHINE_I386 => Architecture::I386,
             pe::IMAGE_FILE_MACHINE_AMD64 => Architecture::X86_64,
             pe::IMAGE_FILE_MACHINE_POWERPC

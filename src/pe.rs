@@ -355,6 +355,8 @@ pub const IMAGE_FILE_MACHINE_TRICORE: u16 = 0x0520;
 pub const IMAGE_FILE_MACHINE_CEF: u16 = 0x0CEF;
 /// EFI Byte Code
 pub const IMAGE_FILE_MACHINE_EBC: u16 = 0x0EBC;
+/// LoongArch64
+pub const IMAGE_FILE_MACHINE_LOONGARCH64: u16 = 0x6264;
 /// AMD64 (K8)
 pub const IMAGE_FILE_MACHINE_AMD64: u16 = 0x8664;
 /// M32R little-endian
@@ -1362,6 +1364,57 @@ pub const IMAGE_REL_ARM64_BRANCH19: u16 = 0x000F;
 pub const IMAGE_REL_ARM64_BRANCH14: u16 = 0x0010;
 /// 32-bit relative address from byte following reloc
 pub const IMAGE_REL_ARM64_REL32: u16 = 0x0011;
+
+//
+// LoongArch64 relocations types.
+//
+
+/// No relocation required
+pub const IMAGE_REL_LARCH_ABSOLUTE: u16 = 0x0000;
+/// Section table index
+pub const IMAGE_REL_LARCH_SECTION: u16 = 0x0001;
+/// Offset within section
+pub const IMAGE_REL_LARCH_SECREL: u16 = 0x0002;
+/// 32-bit relative address from byte following reloc
+pub const IMAGE_REL_LARCH_REL32: u16 = 0x0003;
+/// 32 bit address
+pub const IMAGE_REL_LARCH_ADDR32: u16 = 0x0004;
+/// 32 bit address w/o image base (RVA: for Data/PData/XData)
+pub const IMAGE_REL_LARCH_ADDR32NB: u16 = 0x0005;
+/// 64 bit address
+pub const IMAGE_REL_LARCH_ADDR64: u16 = 0x0006;
+/// Bits [31:12] of the 32/64-bit absolute address, for lu12i.w instructions
+pub const IMAGE_REL_LARCH_ABS_HI20: u16 = 0x0007;
+/// Bits [11:0] of the 32/64-bit absolute address, for addi-formatted instructions
+pub const IMAGE_REL_LARCH_ABS_LO12: u16 = 0x0008;
+/// Bits [51:32] of the 64-bit absolute address, for lu32i.d instructions
+pub const IMAGE_REL_LARCH_ABS64_LO20: u16 = 0x0009;
+/// Bits [63:52] of the 64-bit absolute address, for lu52i.d instructions
+pub const IMAGE_REL_LARCH_ABS64_HI12: u16 = 0x000A;
+/// 18-bit PC-relative jump offset, for branch instructions with 16-bit offsets
+pub const IMAGE_REL_LARCH_B16: u16 = 0x000B;
+/// 23-bit PC-relative jump offset, for branch instructions with 21-bit offsets
+pub const IMAGE_REL_LARCH_B21: u16 = 0x000C;
+/// 28-bit PC-relative jump offset, for jump instructions with 26-bit offsets
+pub const IMAGE_REL_LARCH_B26: u16 = 0x000D;
+/// 32-bit PC-relative call offset, for the paired pcaddu12i and jirl instructions
+pub const IMAGE_REL_LARCH_CALL30: u16 = 0x000E;
+/// 38-bit PC-relative call offset, for the paired pcaddu18i and jirl instructions
+pub const IMAGE_REL_LARCH_CALL36: u16 = 0x000F;
+/// 20-bit PC-relative offset, for pcaddi instructions with 22-bit offsets
+pub const IMAGE_REL_LARCH_PCREL20_S2: u16 = 0x0010;
+/// Bits [31:12] of the 32-bit PC-relative offset, for pcaddu12i instructions
+pub const IMAGE_REL_LARCH_PCADD_HI20: u16 = 0x0011;
+/// Bits [11:0] of the 32-bit PC-relative offset, for addi-formatted instructions
+pub const IMAGE_REL_LARCH_PCADD_LO12: u16 = 0x0012;
+/// Bits [31:12] of the 32/64-bit PC-relative offset, for pcalau12i instructions
+pub const IMAGE_REL_LARCH_PCALA_HI20: u16 = 0x0013;
+/// Bits [11:0] of the 32/64-bit PC-relative offset, for addi-formatted instructions
+pub const IMAGE_REL_LARCH_PCALA_LO12: u16 = 0x0014;
+/// Bits [51:32] of the 64-bit PC-relative offset, for lu32i.d instructions
+pub const IMAGE_REL_LARCH_PCALA64_LO20: u16 = 0x0015;
+/// Bits [63:52] of the 64-bit PC-relative offset, for lu52i.d instructions
+pub const IMAGE_REL_LARCH_PCALA64_HI12: u16 = 0x0016;
 
 //
 // x64 relocations

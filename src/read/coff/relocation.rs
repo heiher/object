@@ -58,6 +58,18 @@ impl<'data, 'file, R: ReadRef<'data>, Coff: CoffHeader> Iterator
                     pe::IMAGE_REL_ARM64_BRANCH26 => (K::Relative, E::AArch64Call, 26, 0),
                     _ => unknown,
                 },
+                pe::IMAGE_FILE_MACHINE_LOONGARCH64 => match typ {
+                    pe::IMAGE_REL_LARCH_SECTION => (K::SectionIndex, g, 16, 0),
+                    pe::IMAGE_REL_LARCH_SECREL => (K::SectionOffset, g, 32, 0),
+                    pe::IMAGE_REL_LARCH_REL32 => (K::Relative, g, 32, -4),
+                    pe::IMAGE_REL_LARCH_ADDR32 => (K::Absolute, g, 32, 0),
+                    pe::IMAGE_REL_LARCH_ADDR32NB => (K::ImageOffset, g, 32, 0),
+                    pe::IMAGE_REL_LARCH_ADDR64 => (K::Absolute, g, 64, 0),
+                    pe::IMAGE_REL_LARCH_B16 => (K::Relative, E::LoongArchBranch, 16, 0),
+                    pe::IMAGE_REL_LARCH_B21 => (K::Relative, E::LoongArchBranch, 21, 0),
+                    pe::IMAGE_REL_LARCH_B26 => (K::Relative, E::LoongArchBranch, 26, 0),
+                    _ => unknown,
+                },
                 pe::IMAGE_FILE_MACHINE_I386 => match typ {
                     pe::IMAGE_REL_I386_DIR16 => (K::Absolute, g, 16, 0),
                     pe::IMAGE_REL_I386_REL16 => (K::Relative, g, 16, 0),
